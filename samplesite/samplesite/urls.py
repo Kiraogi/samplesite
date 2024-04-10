@@ -1,5 +1,5 @@
 """
-URL configuration for saplesite project.
+URL configuration for samplesite project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
