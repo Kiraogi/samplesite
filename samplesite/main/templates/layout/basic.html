@@ -53,7 +53,7 @@
         <span class="nav-link root">Транспорт</span>
         <a class="nav-link" href="#">Легковые</a>
         <a class="nav-link" href="#">Грузовые</a>
-        <a class="nav-link root" href="#">О сайте</a>
+        <a class="nav-link root" href="{% url 'main:other' page='about' %}">О сайте</a>
     </nav>
     <main class="col py-2">
         {% bootstrap_messages %}
