@@ -23,6 +23,7 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <div class="navbar-nav">
+                {% if user.is_authenticated %}
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown" data-bs-toggle="dropdown" href="#">Профиль</a>
                     <div class="dropdown-menu">
@@ -38,8 +39,10 @@
                         <a class="dropdown-item" href="#">Удалить</a>
                     </div>
                 </div>
+                {% else %}
                 <a class="nav-link" href="#">Регистрация</a>
-                <a class="nav-link" href="#">Вход</a>
+                <a class="nav-link" href="{% url 'main:login' %}">Вход</a>
+                {% endif %}
             </div>
         </div>
     </div>
