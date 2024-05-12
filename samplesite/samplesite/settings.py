@@ -76,11 +76,15 @@ WSGI_APPLICATION = 'samplesite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+DATABASE_ROUTERS = ['samplesite.routers.BboardDbRouter']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'bboard.sqlite3',
+        'NAME': BASE_DIR / 'default_db.sqlite3',
+    },
+    'other': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'other_db.sqlite3',
     }
 }
 
