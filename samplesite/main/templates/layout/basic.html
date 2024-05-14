@@ -27,11 +27,11 @@
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown" data-bs-toggle="dropdown" href="#">Профиль</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Мои объявления</a>
+                        <a class="dropdown-item" href="{% url 'main:profile' %}">Мои объявления</a>
                         <a class="dropdown-item" href="#">Изменить личные данные</a>
                         <a class="dropdown-item" href="#">Изменить пароль</a>
                         <hr class="dropdown-divider">
-                        <form class="px-3">
+                        <form class="px-3" method="post" action="{% url 'main:logout' %}">
                             {% csrf_token %}
                             {% bootstrap_button 'Выход' button_class='btn-danger' %}
                         </form>
