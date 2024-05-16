@@ -28,7 +28,7 @@
                     <a class="nav-link dropdown" data-bs-toggle="dropdown" href="#">Профиль</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{% url 'main:profile' %}">Мои объявления</a>
-                        <a class="dropdown-item" href="#">Изменить личные данные</a>
+                        <a class="dropdown-item" href="{% url 'main:profile_edit' %}">Изменить личные данные</a>
                         <a class="dropdown-item" href="#">Изменить пароль</a>
                         <hr class="dropdown-divider">
                         <form class="px-3" method="post" action="{% url 'main:logout' %}">
