@@ -29,7 +29,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{% url 'main:profile' %}">Мои объявления</a>
                         <a class="dropdown-item" href="{% url 'main:profile_edit' %}">Изменить личные данные</a>
-                        <a class="dropdown-item" href="#">Изменить пароль</a>
+                        <a class="dropdown-item" href="{% url 'main:password_edit' %}">Изменить пароль</a>
                         <hr class="dropdown-divider">
                         <form class="px-3" method="post" action="{% url 'main:logout' %}">
                             {% csrf_token %}
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 {% else %}
-                <a class="nav-link" href="#">Регистрация</a>
+                <a class="nav-link" href="{% url 'main:register' %}">Регистрация</a>
                 <a class="nav-link" href="{% url 'main:login' %}">Вход</a>
                 {% endif %}
             </div>

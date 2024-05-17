@@ -1,11 +1,15 @@
 from django.urls import path
 
-from .views import index, other_page, BBloginView, profile, BBLogoutView, ProfileEditView
+from .views import index, other_page, BBloginView, profile, BBLogoutView, ProfileEditView, PasswordEditView, RegisterView, RegisterDoneView, user_activate
 
 app_name = 'main'
 urlpatterns = [
-    path('account/profile/edit/', ProfileEditView.as_view(), name='profile_edit'),
-    path('account/logout/', BBLogoutView.as_view(), name='logout'),
+    path('accounts/activate/<str:sign>/', user_activate, name='activate'),
+    path('accounts/register/done/', RegisterDoneView.as_view(), name='register_done'),
+    path('accounts/register/', RegisterView.as_view(), name='register'),
+    path('accounts/password/edit/', PasswordEditView.as_view(), name='password_edit'),
+    path('accounts/profile/edit/', ProfileEditView.as_view(), name='profile_edit'),
+    path('accounts/logout/', BBLogoutView.as_view(), name='logout'),
     path('accounts/profile/', profile, name='profile'),
     path('accounts/login/', BBloginView.as_view(), name='login'),
     path('<str:page>/', other_page, name='other'),

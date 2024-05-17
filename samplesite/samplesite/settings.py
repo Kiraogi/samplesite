@@ -133,3 +133,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'main.AdvUser'
 
 LOGUOT_REDIRECT_URL = 'main:index'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
