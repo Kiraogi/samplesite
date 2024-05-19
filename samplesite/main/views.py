@@ -4,17 +4,40 @@ from django.template import TemplateDoesNotExist
 from django.template.loader import get_template
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.views.generic.base import TemplateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.core.signing import BadSignature
+from django.contrib.auth import logout
 
 from .models import AdvUser
 from .forms import ProfileEditForm, RegisterForm
 from .utilities import signer
+
+
+class ProfileDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = AdvUser
+    template_name = 'main/profile_delete.html'
+    success_url = reverse_lazy('main:index')
+    success_message = 'Пользователь удален'
+
+    def setup(self, request, *args, **kwargs):
+        self.user_id = request.user.pk
+        return super().setup(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return super().post(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        if not queryset:
+            queryset = self.get_queryset()
+        return get_object_or_404(queryset, pk=self.user_id)
+
+
 
 
 def user_activate(request, sign):
