@@ -1,14 +1,35 @@
 from django.contrib import admin
 import datetime
 
-from .models import AdvUser
+from .models import AdvUser, SuperRubric, SubRubric, SubRubricForm
 from .utilities import send_activation_notification
+
+
+class SubRubricAdmin(admin.ModelAdmin):
+    form = SubRubricForm
+
+
+admin.site.register(SubRubric, SubRubricAdmin)
+
+
+class SubRubricInline(admin.TabularInline):
+    model = SubRubric
+
+
+class SuperRubricAdmin(admin.ModelAdmin):
+    exclude = ('super_rubric',)
+    inlines = (SubRubricInline,)
+
+
+admin.site.register(SuperRubric, SuperRubricAdmin)
+
 
 @admin.action(description='Отправить письмо с требованием активации')
 def send_notifications(modeladmin, request, queryset):
     for rec in queryset:
         send_activation_notification(rec)
     modeladmin.message_user(request, 'Письмо с требованием активации отправлено')
+
 
 class NonactivatedFilter(admin.SimpleListFilter):
     title = 'Прошли активацию?'
@@ -32,6 +53,7 @@ class NonactivatedFilter(admin.SimpleListFilter):
             d = datetime.date.today() - datetime.timedelta(weeks=1)
             return queryset.filter(is_active=False, is_activated=False, date_joined__date__lt=d)
 
+
 class AdvUserAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'is_activated', 'date_joined')
     search_fields = ('username', 'email', 'first_name', 'last_name')
@@ -39,7 +61,7 @@ class AdvUserAdmin(admin.ModelAdmin):
     fields = (('username', 'email'), ('first_name', 'last_name'), ('send_messages', 'is_active', 'is_activated'),
               ('is_staff', 'is_superuser'), 'groups', 'user_permissions', ('last_login', 'date_joined'))
     readonly_fields = ('last_login', 'date_joined')
-    actions = (send_notifications, )
+    actions = (send_notifications,)
 
 
 admin.site.register(AdvUser, AdvUserAdmin)
