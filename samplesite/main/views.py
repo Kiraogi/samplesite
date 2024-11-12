@@ -17,6 +17,8 @@ from .models import AdvUser
 from .forms import ProfileEditForm, RegisterForm
 from .utilities import signer
 
+def rubric_bbs(request, pk):
+    pass
 
 class ProfileDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = AdvUser
