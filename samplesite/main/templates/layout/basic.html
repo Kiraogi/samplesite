@@ -26,7 +26,7 @@
                 {% if user.is_authenticated %}
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown" data-bs-toggle="dropdown" href="#">Профиль</a>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item" href="{% url 'main:profile' %}">Мои объявления</a>
                         <a class="dropdown-item" href="{% url 'main:profile_edit' %}">Изменить личные данные</a>
                         <a class="dropdown-item" href="{% url 'main:password_edit' %}">Изменить пароль</a>
