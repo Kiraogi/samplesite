@@ -57,3 +57,6 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = AdvUser
         fields = ('username', 'email', 'first_name', 'last_name', 'send_messages')
+
+class SearchForm(forms.Form):
+    keyword = forms.CharField(required=False, max_length=20, label='Поиск')

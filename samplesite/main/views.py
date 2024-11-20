@@ -11,14 +11,32 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.core.signing import BadSignature
+from django.core.paginator import Paginator
 from django.contrib.auth import logout
+from django.db.models import Q
 
-from .models import AdvUser
-from .forms import ProfileEditForm, RegisterForm
+from .models import AdvUser, SubRubric, Bb
+from .forms import ProfileEditForm, RegisterForm, SearchForm
 from .utilities import signer
 
 def rubric_bbs(request, pk):
-    pass
+    rubric = get_object_or_404(SubRubric, pk=pk)
+    bbs = Bb.objects.filter(is_active=True, rubric=rubric)
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        q = Q(title__icontains=keyword) | Q(content__icontains=keyword)
+        bbs = bbs.filter(q)
+    else:
+        keyword = ''
+    form = SearchForm(initial={'keyword':keyword})
+    paginator = Paginator(bbs, 2)
+    if 'page' in request.GET:
+        page_num = request.GET['page']
+    else:
+        page_num = 1
+    page = paginator.get_page(page_num)
+    context = {'rubric': rubric, 'page': page, 'bbs': page.object_list, 'form': form}
+    return render(request, 'main/rubric.html', context)
 
 class ProfileDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = AdvUser
