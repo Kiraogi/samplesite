@@ -19,6 +19,11 @@ from .models import AdvUser, SubRubric, Bb
 from .forms import ProfileEditForm, RegisterForm, SearchForm
 from .utilities import signer
 
+"""
+    rubric_bbs - функция-обработчик, 
+    отображает объявления, относящиеся к рубрике, 
+    с возможностью поиска
+"""
 def rubric_bbs(request, pk):
     rubric = get_object_or_404(SubRubric, pk=pk)
     bbs = Bb.objects.filter(is_active=True, rubric=rubric)
@@ -38,6 +43,12 @@ def rubric_bbs(request, pk):
     context = {'rubric': rubric, 'page': page, 'bbs': page.object_list, 'form': form}
     return render(request, 'main/rubric.html', context)
 
+
+
+"""
+    ProfileDeleteView - класс-обработчик, 
+    предназначен для удаления пользовательской учетной записи
+"""
 class ProfileDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = AdvUser
     template_name = 'main/profile_delete.html'
@@ -58,8 +69,10 @@ class ProfileDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
         return get_object_or_404(queryset, pk=self.user_id)
 
 
-
-
+"""
+    user_activate - функция-обработчик, 
+    активирует пользовательскую учетную запись
+"""
 def user_activate(request, sign):
     try:
         user = signer.unsign(sign)
@@ -76,10 +89,18 @@ def user_activate(request, sign):
     return render(request, template)
 
 
+"""
+    RegisterDoneView - класс-обработчик, 
+    отображает сообщение после регистрации
+"""
 class RegisterDoneView(TemplateView):
     template_name = 'main/register_done.html'
 
 
+"""
+    RegisterView - класс-обработчик, 
+    регистрирует нового пользователя
+"""
 class RegisterView(CreateView):
     model = AdvUser
     template_name = 'main/register.html'
@@ -87,12 +108,20 @@ class RegisterView(CreateView):
     success_url = reverse_lazy('main:register_done')
 
 
+"""
+    PasswordEditView - класс-обработчик, 
+    меняет пароль зарегистрированного пользователя
+"""
 class PasswordEditView(SuccessMessageMixin, LoginRequiredMixin, PasswordChangeView):
     template_name = 'main/password_edit.html'
     success_url = reverse_lazy('main:profile')
     success_message = 'Пароль пользователя изменен'
 
 
+"""
+    ProfileEditView - класс-обработчик, 
+    изменяет профиль зарегистрированного пользователя
+"""
 class ProfileEditView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = AdvUser
     template_name = 'main/profile_edit.html'
@@ -110,25 +139,45 @@ class ProfileEditView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return get_object_or_404(queryset, pk=self.user_id)
 
 
+"""
+    BBLogoutView - класс-обработчик, 
+    выполняет выход из системы
+"""
 class BBLogoutView(LogoutView):
     pass
 
 
+"""
+    profile - функция-обработчик, 
+    отображает профиль зарегистрированного пользователя
+"""
 @login_required
 def profile(request):
     return render(request, 'main/profile.html')
 
 
+"""
+    BBloginView - класс-обработчик, 
+    выполняет вход в систему
+"""
 class BBloginView(LoginView):
     template_name = 'main/login.html'
 
 
+"""
+    index - функция-обработчик, 
+    отображает главную страницу
+"""
 def index(request):
     bbs = Bb.objects.filter(is_active=True).select_related('rubric')[:10]
     context = {'bbs': bbs}
     return render(request, 'main/index.html', context)
 
 
+"""
+    other_page - функция-обработчик, 
+    отображает страницы, не относящиеся к объявлениям
+"""
 def other_page(request, page):
     try:
         template = get_template('main/' + page + '.html')

@@ -2,18 +2,29 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .utilities import get_timestamp_path
 
+"""
+    Модель рубрики объявления. 
+    Порядок имеет индекс, поэтому запросы к БД
+    будут выполняться быстро    
+"""
 class Rubric(models.Model):
     name = models.CharField(max_length=20, db_index=True, verbose_name='Порядок')
     order = models.SmallIntegerField(default=0, db_index=True, verbose_name='Порядок')
     super_rubric = models.ForeignKey('SuperRubric', on_delete=models.PROTECT, null=True,
                                      blank=True, verbose_name='Надрубрика')
 
-
+    """
+    Менеджер для надрубрик. 
+    Возвращает только надрубрики
+    """
 class SuperRubricManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(super_rubric__isnull=True)
 
-
+    """
+    Надрубрика.
+    Proxy модель для Rubric.
+    """
 class SuperRubric(Rubric):
     object = SuperRubricManager()
 
@@ -26,12 +37,18 @@ class SuperRubric(Rubric):
         verbose_name = 'Надрубрика'
         verbose_name_plural = 'Надрубрики'
 
-
+    """
+    Менеджер для подрубрик. 
+    Возвращает только подрубрики
+    """
 class SubRubricManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(super_rubric__isnull=False)
 
-
+    """
+    Подрубрика.
+    Proxy модель для Rubric.
+    """
 class SubRubric(Rubric):
     object = SubRubricManager()
 
@@ -44,7 +61,9 @@ class SubRubric(Rubric):
         verbose_name = 'Подрубрика'
         verbose_name_plural = 'Подрубрики'
 
-
+    """
+    Модель пользователя.
+    """
 class AdvUser(AbstractUser):
     is_activated = models.BooleanField(default=True, db_index=True, verbose_name='Прошел активацию?')
     send_messages = models.BooleanField(default=True, verbose_name='Слать оповещения о новых комментариях?')
@@ -57,7 +76,9 @@ class AdvUser(AbstractUser):
     class Meta(AbstractUser.Meta):
         pass
 
-
+    """
+    Модель объявления.
+    """
 class Bb(models.Model):
     rubric = models.ForeignKey (SubRubric, on_delete=models.PROTECT, verbose_name='Рубрика')
     title = models.CharField(max_length=50, verbose_name='Название товара')
@@ -79,6 +100,9 @@ class Bb(models.Model):
         verbose_name = 'Объявление'
         ordering = ['-created_at']
 
+    """
+    Модель дополнительного изображения.
+    """
 class AdditionalImage(models.Model):
     bb = models.ForeignKey(Bb, on_delete=models.CASCADE, verbose_name='Объявление')
     image = models.ImageField(upload_to=get_timestamp_path, verbose_name='Изображение')
