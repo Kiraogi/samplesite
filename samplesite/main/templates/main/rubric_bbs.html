@@ -23,7 +23,7 @@
         <div class="row p-3">
             <a class="col-md-2" href="{{ url }}{{ all }}">
                 {% if bb.image %}
-                <img class="img-fluid" src="{ % thumbnail bb.image 'default' %}">
+                <img class="img-fluid" src="{% thumbnail bb.image 'default' %}">
                 {% else %}
                 <img class="img-fluid" src="{% static 'main/empty.jpg' %}">
                 {% endif %}
@@ -32,7 +32,7 @@
                 <h3 class="card-title"><a href="{{ url }}{{ all }}">{{ bb.title }}</a></h3>
                 <div class="card-text mb-2">{{ bb.content }}</div>
                 <p class="card-text fw-bold">{{ bb.price }} руб.</p>
-                <p clas="card-text text-end fst-italic">{{ bb.created_at }}</p>
+                <p class="card-text text-end fst-italic">{{ bb.created_at }}</p>
             </div>
         </div>
     </div>

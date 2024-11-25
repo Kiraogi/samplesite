@@ -44,7 +44,7 @@ def rubric_bbs(request, pk):
     page = paginator.get_page(page_num)
     context = {'rubric': rubric, 'page': page,
                'bbs': page.object_list, 'form': form}
-    return render(request, 'main/rubric.html', context)
+    return render(request, 'main/rubric_bbs.html', context)
 
 
 """
