@@ -19,7 +19,7 @@
 <div class="vstack gap-3 my-4">
     {% for bb in bbs %}
     <div class="card">
-        {% url 'main:bb_detail' rubric_pk=rubric.pk pk=bb.pk as url%}
+        {% url 'main:bb_detail' rubric_pk=rubric.pk pk=bb.pk as url %}
         <div class="row p-3">
             <a class="col-md-2" href="{{ url }}{{ all }}">
                 {% if bb.image %}
