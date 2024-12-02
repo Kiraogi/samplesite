@@ -217,3 +217,10 @@ def bb_detail(request, rubric_pk, pk):
     ais = bb.additionalimage_set.all()
     context = {'bb': bb, 'ais': ais}
     return render(request, 'main/bb_detail.html', context)
+
+@login_required
+def profile_bb_detail(request, rubric_pk, pk):
+    bb = get_object_or_404(Bb, pk=pk)
+    ais = bb.additionalimage_set.all()
+    context = {'bb': bb, 'ais': ais}
+    return render(request, 'main/bb_detail.html', context)
