@@ -225,3 +225,4 @@ def profile_bb_detail(request, rubric_pk, pk):
     context = {'bb': bb, 'ais': ais}
     return render(request, 'main/bb_detail.html', context)
     
+
