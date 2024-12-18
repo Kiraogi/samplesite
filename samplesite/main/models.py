@@ -26,7 +26,7 @@ class SuperRubricManager(models.Manager):
     Proxy модель для Rubric.
     """
 class SuperRubric(Rubric):
-    object = SuperRubricManager()
+    objects = SuperRubricManager()
 
     def __str__(self):
         return self.name
@@ -50,7 +50,7 @@ class SubRubricManager(models.Manager):
     Proxy модель для Rubric.
     """
 class SubRubric(Rubric):
-    object = SubRubricManager()
+    objects = SubRubricManager()
 
     def __str__(self):
         return '%s - %s' % (self.super_rubric.name, self.name)
