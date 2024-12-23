@@ -219,10 +219,11 @@ def bb_detail(request, rubric_pk, pk):
     return render(request, 'main/bb_detail.html', context)
 
 @login_required
-def profile_bb_detail(request, rubric_pk, pk):
-    bb = get_object_or_404(Bb, pk=pk)
+def profile_bb_detail(request, pk):
+    bb = get_object_or_404(Bb, pk=pk, author=request.user)
     ais = bb.additionalimage_set.all()
     context = {'bb': bb, 'ais': ais}
     return render(request, 'main/bb_detail.html', context)
+
     
 
