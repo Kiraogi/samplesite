@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render , get_object_or_404 , redirect
 from django.http import HttpResponse, Http404
 from django.template import TemplateDoesNotExist
 from django.template.loader import get_template
+from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
@@ -9,14 +10,13 @@ from django.views.generic.base import TemplateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404
 from django.core.signing import BadSignature
 from django.core.paginator import Paginator
 from django.contrib.auth import logout
 from django.db.models import Q
 
 from .models import AdvUser, SubRubric, Bb
-from .forms import ProfileEditForm, RegisterForm, SearchForm
+from .forms import ProfileEditForm, RegisterForm, SearchForm, BbForm, AIFormSet
 from .utilities import signer
 
 """
@@ -224,3 +224,20 @@ def profile_bb_detail(request, pk):
     ais = bb.additionalimage_set.all()
     context = {'bb': bb, 'ais': ais}
     return render(request, 'main/bb_detail.html', context)
+
+@login_required
+def profile_bb_add(request):
+    if request.method == 'POST':
+        form = BbForm(request.POST, request.FILES)
+        if form.is_valid():
+            bb = form.save()
+            formset = AIFormSet(request.POST, request.FILES, instance=bb)
+            if formset.is_valid():
+                formset.save()
+                messages.add_message(request, messages.SUCCESS, "Объявление добавлено")
+                return redirect('main:profile')
+    else:
+        form = BbForm(initial={'author': request.user.pk})
+        formset = AIFormSet()
+    context = {'form': form, 'formset': formset}
+    return render(request, 'main/profile_bb_add.html', context)
