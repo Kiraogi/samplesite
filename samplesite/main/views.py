@@ -241,3 +241,32 @@ def profile_bb_add(request):
         formset = AIFormSet()
     context = {'form': form, 'formset': formset}
     return render(request, 'main/profile_bb_add.html', context)
+
+@login_required
+def profile_bb_edit(request, pk):
+    bb = get_object_or_404(Bb, pk=pk)
+    if request.method == 'POST':
+        form = BbForm(request.POST, request.FILES, instance=bb)
+        if form.is_valid():
+            bb = form.save()
+            formset = AIFormSet(request.POST, request.FILES, instance=bb)
+            if formset.is_valid():
+                formset.save()
+                messages.add_message(request, messages.SUCCESS, "Объявление отредактировано")
+                return redirect('main:profile')
+    else:
+        form = BbForm(instance=bb)
+        formset = AIFormSet(instance=bb)
+    context = {'form': form, 'formset': formset}
+    return render(request, 'main/profile_bb_edit.html', context)
+
+@login_required
+def profile_bb_delete(request, pk):
+    bb = get_object_or_404(Bb, pk=pk)
+    if request.method == 'POST':
+        bb.delete()
+        messages.add.message(request, messages.SUCCESS, "Объявление удалено")
+        return redirect('main:profile')
+    else:
+        context = {'bb' : bb}
+        return render(request, 'main/profile_bb_delete.html', context)

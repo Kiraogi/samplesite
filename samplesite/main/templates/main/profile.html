@@ -32,6 +32,10 @@
             <div class="col-md-10 card-body">
                 <h3 class="card-title"><a href="{{ url }}{{ all }}">{{ bb.title }}</a></h3>
                 <div class="card-text mb-2">{{ bb.content }}</div>
+                <p class="card-text text-end">
+                    <a href="{% url 'main:profile_bb_edit' pk=bb.pk %}">Исправить</a>
+                    <a href="{% url 'main:profile_bb_delete' pk=bb.pk %}">Удалить</a>
+                </p>
                 <p class="card-text fw-bold">{{ bb.price }} руб.</p>
                 <p class="card-text text-end fst-italic">{{ bb.created_at }}</p>
             </div>

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import rubric_bbs, bb_detail, profile_bb_detail, profile_bb_add
+from .views import rubric_bbs, bb_detail, profile_bb_detail, profile_bb_add, profile_bb_edit, profile_bb_delete
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -16,8 +16,10 @@ urlpatterns = [
     path('accounts/password/edit/', PasswordEditView.as_view(), name='password_edit'),
     path('accounts/profile/edit/', ProfileEditView.as_view(), name='profile_edit'),
     path('accounts/logout/', BBLogoutView.as_view(), name='logout'),
+    path('accounts/profile/edit/', profile_bb_edit, name='profile_bb_edit'),
+    path('accounts/profile/delete/', profile_bb_delete, name='profile_bb_delete'),
     path('accounts/profile/add/', profile_bb_add, name='profile_bb_add'),
-    path('acconts/profile/<int:pk>/', profile_bb_detail, name='profile_bb_detail'),
+    path('accounts/profile/<int:pk>/', profile_bb_detail, name='profile_bb_detail'),
     path('accounts/profile/', profile, name='profile'),
     path('accounts/login/', BBloginView.as_view(), name='login'),
     path('<int:rubric_pk>/<int:pk>/', bb_detail, name='bb_detail'),
