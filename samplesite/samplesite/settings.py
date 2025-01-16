@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'django_cleanup',
     'easy_thumbnails',
+    'captcha',
 ]
 
 MIDDLEWARE = [
