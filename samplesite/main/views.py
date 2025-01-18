@@ -236,7 +236,7 @@ def bb_detail(request, rubric_pk, pk):
     ais = bb.additionalimage_set.all()
     comments = Comment.objects.filter(bb=pk, is_active=True)
     context = {'bb': bb, 'ais': ais, 'comments': comments, 'form': form}
-    return render(request, 'main/bb_details.html', context)
+    return render(request, 'main/bb_detail.html', context)
 
 @login_required
 def profile_bb_detail(request, pk):
