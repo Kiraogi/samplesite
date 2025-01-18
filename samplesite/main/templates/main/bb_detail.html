@@ -28,6 +28,23 @@
     {% endfor %}
 </div>
 {% endif %}
+<h4 class="mt-5">Новый комментарий</h4>
+<form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form layout='horizontal' %}
+    {% bootstrap_button 'Добавить' %}
+</form>
+{% if comments %}
+<div class="vstack gap-3 mt-5">
+    {% for comment in comments %}
+    <div class="p-2 border">
+        <h5>{{ comment.author }}</h5>
+        <p>{{ comment.content }}</p>
+        <p class="text-end fst-italic">{{ comment.created_at }}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
 <p><a href="{% url 'main:rubric_bbs' pk=bb.rubric.pk %}{{ all }}">Назад</a></p>
 {% endblock %}
 
