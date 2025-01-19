@@ -81,3 +81,10 @@ class BbAdmin(admin.ModelAdmin):
     inlines = (AdditionalImageInline, CommentInline)
 
 admin.site.register(Bb, BbAdmin)
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('author', 'bb', 'created_at', 'is_active')
+    list_filter = ('author', 'bb', 'created_at', 'is_active')
+    search_fields = ('author__username', 'bb__title', 'comment_text')
+
+admin.site.register(Comment, CommentAdmin)
