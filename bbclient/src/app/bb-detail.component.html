@@ -1,1 +1,22 @@
-<p>bb-detail works!</p>
+<ng-container *ngIf="bb">
+<div class="'image"><img scr ="{{bb.image}}"></div>
+<div class="others">
+    <h2>{{bb.title}}</h2>
+    <p>{{bb.content}}</p>
+    <p class="price">{{bb.price|currency:'RUR'}}</p>
+    <p>{{bb.contacts}}</p>
+    <p class="date">{{bb.created_at|date:'medium'}}</p>
+</div>
+</ng-container>
+<h3>Новый комментарий</h3>
+<form>
+    <p>Имя: <input [(ngModel)]="author" name="author" required></p>
+    <p>Пароль: <input type="password" [(ngModel)]="password" name="password" required></p>
+    <p>Содержание:<br><textarea [(ngModel)]="content" name="content" required></textarea></p>
+    <p><input type="submit" value="Добавить"</p>
+</form (ngSubmit)="submitComment()">
+<div class="comment" *ngFor="let comment of comments">
+    <h4>{{comment.author}}</h4>
+    <p>{{comment.content}}</p>
+    <p class="date">{{comment.created_at|date:'medium'}}</p>
+</div> 

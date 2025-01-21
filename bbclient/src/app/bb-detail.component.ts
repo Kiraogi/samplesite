@@ -23,6 +23,16 @@ export class BbDetailComponent implements OnInit {
       (comments: Object[]) => {this.comments = comments;}
     );
   }
+  submitComment() {
+    this.bbservice.addComment(this.bb.id, this.author, this.password,
+      this.content).subscribe((comment:Object) => {
+        if (comment) {
+          this.content ='';
+          this.getComments();
+        }
+      }
+    );
+  }
   ngOnInit(){
     const pk = this.ar.snapshot.params['pk'];
     this.bbservice.getBb(pk).subscribe((bb: Object) => {
@@ -30,5 +40,4 @@ export class BbDetailComponent implements OnInit {
       this.getComments();
     });
   }
-
 }
