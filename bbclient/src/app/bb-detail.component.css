@@ -1,0 +1,27 @@
+div.image {
+    float: left;
+  }
+  div.image img {
+    width: 400px;
+  }
+  div.others {
+    margin-left: 420px;
+  }
+  p.price {
+    font-size: larger;
+    font-weight: bold;
+    text-align: right;
+  }
+  p.date {
+    font-style: italic;
+    text-align: right;
+  }
+  h3 {
+    clear: both;
+  }
+  div.comment {
+    margin: 10px 0px;
+    padding: 0px 10px;
+    border: grey thin solid;
+  }
+  

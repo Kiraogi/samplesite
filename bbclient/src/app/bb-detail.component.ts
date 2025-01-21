@@ -5,9 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-bb-detail',
-  imports: [],
   templateUrl: './bb-detail.component.html',
-  styleUrl: './bb-detail.component.css'
+  styleUrls: ['./bb-detail.component.css']
 })
 export class BbDetailComponent implements OnInit {
   protected bb: any;

@@ -5,9 +5,8 @@ import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-bb-list',
-  imports: [],
   templateUrl: './bb-list.component.html',
-  styleUrl: './bb-list.component.css'
+  styleUrls: ['./bb-list.component.css']
 })
 
 export class BbListComponent implements OnInit {
