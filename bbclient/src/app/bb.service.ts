@@ -40,7 +40,7 @@ export class BbService {
     return this.http.post<Object>('${this.url}bbs/${bb}/comments/', comment, options).pipe(catchError(this.handleError()));
   }
 
-  gerComments(pk: Number): Observable<Object[]> {
+  getComments(pk: Number): Observable<Object[]> {
     return this.http.get<Object[]>('${this.url}bbs/${pk}/comments/');
   }
 
