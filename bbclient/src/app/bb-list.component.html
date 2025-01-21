@@ -1,1 +1,7 @@
-<p>bb-list works!</p>
+<h2>Последние 10 объявлений</h2>
+<div *ngFor="let bb of bbs">
+    <h3><a [routerLink]="[bb.id]">{{bb.title}}</a></h3>
+    <p>{{bb.content}}</p>
+    <p class="price">{{bb.price|currency:'RUR'}}</p>
+    <p class="date">{{bb.created_at|date:'medium'}}</p>
+</div>
