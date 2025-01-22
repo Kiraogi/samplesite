@@ -15,7 +15,7 @@
 ## Технический стек
 
 - Python 3.x
-- Django
+- Django / DRF (REST framework)
 - SQLite (база данных по умолчанию)
 - HTML/CSS
 - Bootstrap (для стилизации)
